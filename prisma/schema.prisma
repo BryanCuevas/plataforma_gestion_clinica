@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model medicos {
+  id_medico           Int             @id @default(autoincrement())
+  id_usuario          Int
+  nombres             String          @db.VarChar(50)
+  apellido_paterno    String          @db.VarChar(20)
+  apellido_materno    String          @db.VarChar(20)
+  correo              String          @unique(map: "uq_correo_medicos") @db.VarChar(100)
+  telefono            String          @unique(map: "uq_telefono_medicos") @db.Char(9)
+  direccion           String          @db.VarChar(150)
+  documento_identidad String          @unique(map: "uq_documento_identidad_medicos") @db.Char(8)
+  estado_auditoria    String          @default("1") @db.Char(1)
+  fecha_creacion      DateTime        @default(now()) @db.Timestamp(6)
+  fecha_modificacion  DateTime?       @db.Timestamp(6)
+  citas_medicas       citas_medicas[]
+  usuarios            usuarios        @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_usuario")
+}
+
+model pacientes {
+  id_paciente         Int             @id @default(autoincrement())
+  id_usuario          Int
+  nombres             String          @db.VarChar(50)
+  apellido_paterno    String          @db.VarChar(20)
+  apellido_materno    String          @db.VarChar(20)
+  correo              String?         @db.VarChar(100)
+  telefono            String          @db.VarChar(9)
+  direccion           String          @db.VarChar(150)
+  documento_identidad String          @unique(map: "uq_documento_identidad_pacientes") @db.Char(8)
+  estado_auditoria    String          @default("1") @db.Char(1)
+  fecha_creacion      DateTime        @default(now()) @db.Timestamp(6)
+  fecha_modificacion  DateTime?       @db.Timestamp(6)
+  citas_medicas       citas_medicas[]
+  usuarios            usuarios        @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_usuario")
+}
+
+model sedes {
+  id_sede            Int             @id @default(autoincrement())
+  nombre             String          @unique(map: "uq_nombre_sedes") @db.VarChar(150)
+  departamento       String          @db.VarChar(100)
+  provincia          String          @db.VarChar(100)
+  distrito           String          @db.VarChar(100)
+  direccion          String          @unique(map: "uq_direccion_sedes") @db.VarChar(200)
+  estado_auditoria   String          @default("1") @db.Char(1)
+  fecha_creacion     DateTime        @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?       @db.Timestamp(6)
+  citas_medicas      citas_medicas[]
+}
+
+model usuarios {
+  id_usuario         Int         @id @default(autoincrement())
+  nombre             String      @unique(map: "uq_nombre_usuarios") @db.VarChar(30)
+  clave              String      @db.Char(10)
+  rol                String      @db.Char(3)
+  estado_auditoria   String      @default("1") @db.Char(1)
+  fecha_creacion     DateTime    @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?   @db.Timestamp(6)
+  medicos            medicos[]
+  pacientes          pacientes[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model citas_medicas {
+  id_cita            Int            @id @default(autoincrement())
+  id_paciente        Int
+  id_medico          Int
+  id_especialidad    Int
+  id_sede            Int
+  fecha              DateTime       @db.Date
+  hora               DateTime       @db.Time(6)
+  motivo             String         @db.VarChar(1000)
+  diagnostico        String         @db.VarChar(500)
+  estado             String         @default("A") @db.Char(1)
+  estado_auditoria   String         @default("1") @db.Char(1)
+  fecha_creacion     DateTime       @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?      @db.Timestamp(6)
+  especialidades     especialidades @relation(fields: [id_especialidad], references: [id_especialidad], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_especialidad_citas_medicas")
+  medicos            medicos        @relation(fields: [id_medico], references: [id_medico], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_medico_citas_medicas")
+  pacientes          pacientes      @relation(fields: [id_paciente], references: [id_paciente], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_paciente_citas_medicas")
+  sedes              sedes          @relation(fields: [id_sede], references: [id_sede], onDelete: NoAction, onUpdate: NoAction, map: "fk_id_sede_citas_medicas")
+}
+
+model especialidades {
+  id_especialidad    Int             @id @default(autoincrement())
+  especialidad       String          @db.VarChar(100)
+  estado_auditoria   String          @default("1") @db.Char(1)
+  fecha_creacion     DateTime        @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?       @db.Timestamp(6)
+  citas_medicas      citas_medicas[]
+}
