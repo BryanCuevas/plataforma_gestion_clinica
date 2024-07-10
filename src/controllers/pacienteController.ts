@@ -7,7 +7,7 @@ export const insertarPaciente = async (req : Request, res : Response) => {
     console.log('pacienteController : insertarPaciente');
     try {
         const { error } = insertarPacienteSchema.validate(req.body);
-        if(error){
+        if (error) {
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message,400));
             return;
@@ -48,7 +48,7 @@ export const modificarPaciente = async (req : Request, res : Response) => {
     try {
         const { id } = req.params;
         const { error } = modificarPacienteSchema.validate(req.body);
-        if(error){
+        if (error) {
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message,400));
             return;

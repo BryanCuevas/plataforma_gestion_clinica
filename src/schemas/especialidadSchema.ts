@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const especialidadBaseSchema = {
     especialidad : Joi.string()
-        .regex(/^[a-zA-Z]+$/) //Solo letras
+        .regex(/^[a-zA-Z\s]+$/) //Solo letras y espacios
         .min(5)
         .max(100)
 };

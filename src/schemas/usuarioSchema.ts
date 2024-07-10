@@ -2,15 +2,13 @@ import Joi from "joi";
 
 const usuarioBaseSchema = {
     nombre : Joi.string()
-        .regex(/^[a-zA-Z0-9\s]*$/) //Solo letras y espacios
+        .pattern(/^[a-zA-Z0-9]+$/) //Solo letras y números
         .min(3)
-        .max(100),
+        .max(30),
     clave: Joi.string()
-        .min(10)
-        .max(10),
+        .pattern(/^[a-zA-Z0-9.,\-_?¿¡!]{10}$/), //Solo letras, números y algunos caracteres especiales
     rol: Joi.string()
-        .min(3)
-        .max(3),
+        .valid('PAC', 'ADM', 'MED')
 };
 
 export const insertarUsuarioSchema = Joi.object({

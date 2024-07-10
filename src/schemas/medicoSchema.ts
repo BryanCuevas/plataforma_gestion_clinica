@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const pacienteBaseSchema = {
+const medicoBaseSchema = {
     id_usuario : Joi.number()
         .integer()
         .positive(),
@@ -26,20 +26,21 @@ const pacienteBaseSchema = {
         .min(10)
         .max(150),
     documento_identidad: Joi.string()
-        .pattern(/^[0-9]{8}$/)  // Solo permite 8 dígitos
+        .pattern(/^[0-9]{8}$/)  // Solo permite 8 dígitos  
 };
 
-export const insertarPacienteSchema = Joi.object({
-    ...pacienteBaseSchema,
-    id_usuario: pacienteBaseSchema.id_usuario.required(),
-    nombres: pacienteBaseSchema.nombres.required(),
-    apellido_paterno: pacienteBaseSchema.apellido_paterno.required(),
-    apellido_materno: pacienteBaseSchema.apellido_materno.required(),
-    telefono: pacienteBaseSchema.telefono.required(),
-    direccion: pacienteBaseSchema.direccion.required(),
-    documento_identidad: pacienteBaseSchema.documento_identidad.required()
+export const insertarMedicoSchema = Joi.object({
+    ...medicoBaseSchema,
+    id_usuario: medicoBaseSchema.id_usuario.required(),
+    nombres: medicoBaseSchema.nombres.required(),
+    apellido_paterno: medicoBaseSchema.apellido_paterno.required(),
+    apellido_materno: medicoBaseSchema.apellido_materno.required(),
+    correo: medicoBaseSchema.correo.required(),
+    telefono: medicoBaseSchema.telefono.required(),
+    direccion: medicoBaseSchema.direccion.required(),
+    documento_identidad: medicoBaseSchema.documento_identidad.required()
 });
 
-export const modificarPacienteSchema = Joi.object({
-    ...pacienteBaseSchema
+export const modificarMedicoSchema = Joi.object({
+    ...medicoBaseSchema
 });

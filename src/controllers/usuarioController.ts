@@ -7,7 +7,7 @@ export const insertarUsuario = async (req : Request, res : Response) => {
     console.log('usuarioController : insertarUsuario');
     try {
         const { error } = insertarUsuarioSchema.validate(req.body);
-        if(error){
+        if (error) {
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message,400));
             return;
@@ -49,7 +49,7 @@ export const modificarUsuario = async (req : Request, res : Response) => {
     try {
         const { id } = req.params;
         const { error } = modificarUsuarioSchema.validate(req.body);
-        if(error){
+        if (error) {
             console.error(error.message);
             res.status(400).json(ResponseModel.error(error.message,400));
             return;

@@ -5,19 +5,19 @@ const sedeBaseSchema = {
         .min(4)
         .max(150),
     departamento: Joi.string()
-        .regex(/^[a-zA-Z\s]+$/) //Solo letras y espacios
+        .pattern(/^[a-zA-Z\s]+$/) //Solo letras y espacios
         .min(4)
         .max(100),
     provincia: Joi.string()
-        .regex(/^[a-zA-Z\s]+$/) //Solo letras y espacios
+        .pattern(/^[a-zA-Z\s]+$/) //Solo letras y espacios
         .min(4)
         .max(100),
     distrito: Joi.string()
-        .regex(/^[a-zA-Z\s]+$/) //Solo letras y espacios
+        .pattern(/^[a-zA-Z\s]+$/) //Solo letras y espacios
         .min(4)
         .max(100),
     direccion: Joi.string()
-        .regex(/^[a-zA-Z0-9\s.,#\-°\/]+$/) //Solo letras, espacios y caracteres comunes asociados a direcciones
+        .pattern(/^[a-zA-Z0-9\s.,#\-°]+$/) //Solo alfanuméricos, espacios y caracteres comunes asociados a direcciones
         .min(10)
         .max(200),        
 };
