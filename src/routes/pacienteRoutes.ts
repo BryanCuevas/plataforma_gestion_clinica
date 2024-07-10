@@ -18,14 +18,27 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Paciente"
+ *             $ref: "#/components/schemas/PacienteInsertar"
  *     responses:
  *       '200':
  *         description: Operación exitosa
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Paciente"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Insertado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '400':
  *         description: Petición no válida
  *       '500':
@@ -42,14 +55,26 @@ router.post('', insertarPaciente);
  *       - Pacientes
  *     summary: Listar pacientes
  *     operationID: listarPacientes
- *     description: Este endpoint permite listar a todos los pacientes
+ *     description: Este endpoint permite listar todos los pacientes
  *     responses:
  *       '200':
  *         description: Operación exitosa
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Paciente"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "OK"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   $ref: '#/components/schemas/Paciente'
  *       '500':
  *         description: Error interno del servidor
 */
@@ -63,7 +88,7 @@ router.get('', listarPacientes);
  *     tags:
  *       - Pacientes
  *     summary: Buscar paciente
- *     description: Este endpoint permite buscar a un paciente si está activo según su ID
+ *     description: Este endpoint permite buscar un paciente según su ID solo si está activo
  *     operationId: obtenerPaciente
  *     parameters:
  *       - name: id_paciente
@@ -79,7 +104,19 @@ router.get('', listarPacientes);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Paciente"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "OK"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   $ref: '#/components/schemas/Paciente'
  *       '500':
  *         description: Error interno del servidor   
 */
@@ -108,11 +145,27 @@ router.get('/:id', obtenerPaciente);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Paciente"
-
+ *             $ref: "#/components/schemas/PacienteModificar"
  *     responses:
  *       '200':
  *         description: Operación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Modificado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '400':
  *         description: Petición no válida
  *       '500':
@@ -141,6 +194,23 @@ router.put('/:id', modificarPaciente);
  *     responses:
  *       '200':
  *         description: Operación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Eliminado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '500':
  *         description: Error interno del servidor
 */

@@ -18,14 +18,27 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Sede"
+ *             $ref: "#/components/schemas/SedeInsertar"
  *     responses:
  *       '200':
  *         description: Operación exitosa
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Sede"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Insertado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '400':
  *         description: Petición no válida
  *       '500':
@@ -42,14 +55,26 @@ router.post('', insertarSede);
  *       - Sedes
  *     summary: Listar sedes
  *     operationID: listarSedes
- *     description: Este endpoint permite listar a todas las sedes
+ *     description: Este endpoint permite listar todas las sedes
  *     responses:
  *       '200':
  *         description: Operación exitosa
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Sede"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "OK"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   $ref: '#/components/schemas/Sede'
  *       '500':
  *         description: Error interno del servidor
 */
@@ -63,7 +88,7 @@ router.get('', listarSedes);
  *     tags:
  *       - Sedes
  *     summary: Buscar sede
- *     description: Este endpoint permite buscar a una sede si está activa según su ID
+ *     description: Este endpoint permite buscar una sede según su ID solo si está activa
  *     operationId: obtenerSede
  *     parameters:
  *       - name: id_sede
@@ -79,7 +104,19 @@ router.get('', listarSedes);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Sede"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "OK"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   $ref: '#/components/schemas/Sede'
  *       '500':
  *         description: Error interno del servidor   
 */
@@ -108,11 +145,27 @@ router.get('/:id', obtenerSede);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Sede"
-
+ *             $ref: "#/components/schemas/SedeModificar"
  *     responses:
  *       '200':
  *         description: Operación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Modificado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '400':
  *         description: Petición no válida
  *       '500':
@@ -141,6 +194,23 @@ router.put('/:id', modificarSede);
  *     responses:
  *       '200':
  *         description: Operación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Eliminado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '500':
  *         description: Error interno del servidor
 */

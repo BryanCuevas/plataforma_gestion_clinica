@@ -18,14 +18,27 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Usuario"
+ *             $ref: "#/components/schemas/UsuarioInsertar"
  *     responses:
  *       '200':
  *         description: Operación exitosa
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Usuario"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Insertado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '400':
  *         description: Petición no válida
  *       '500':
@@ -49,7 +62,19 @@ router.post('', insertarUsuario);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Usuario"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "OK"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   $ref: '#/components/schemas/Usuario'
  *       '500':
  *         description: Error interno del servidor
 */
@@ -79,7 +104,19 @@ router.get('', listarUsuarios);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/Usuario"
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "OK"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   $ref: '#/components/schemas/Usuario'
  *       '500':
  *         description: Error interno del servidor   
 */
@@ -108,11 +145,27 @@ router.get('/:id', obtenerUsuario);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/Usuario"
-
+ *             $ref: "#/components/schemas/UsuarioModificar"
  *     responses:
  *       '200':
  *         description: Operación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Modificado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '400':
  *         description: Petición no válida
  *       '500':
@@ -141,6 +194,23 @@ router.put('/:id', modificarUsuario);
  *     responses:
  *       '200':
  *         description: Operación exitosa
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Eliminado correctamente"
+ *                 status:
+ *                   type: number
+ *                   example: 200
+ *                 data:
+ *                   type: string
+ *                   example: null
  *       '500':
  *         description: Error interno del servidor
 */

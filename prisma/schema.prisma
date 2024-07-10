@@ -9,7 +9,7 @@ datasource db {
 
 model medicos {
   id_medico           Int             @id @default(autoincrement())
-  id_usuario          Int
+  id_usuario          Int             @unique(map: "uq_id_usuario_medicos")
   nombres             String          @db.VarChar(50)
   apellido_paterno    String          @db.VarChar(20)
   apellido_materno    String          @db.VarChar(20)
@@ -26,7 +26,7 @@ model medicos {
 
 model pacientes {
   id_paciente         Int             @id @default(autoincrement())
-  id_usuario          Int
+  id_usuario          Int             @unique(map: "uq_id_usuario_pacientes")
   nombres             String          @db.VarChar(50)
   apellido_paterno    String          @db.VarChar(20)
   apellido_materno    String          @db.VarChar(20)
@@ -55,15 +55,15 @@ model sedes {
 }
 
 model usuarios {
-  id_usuario         Int         @id @default(autoincrement())
-  nombre             String      @unique(map: "uq_nombre_usuarios") @db.VarChar(30)
-  clave              String      @db.Char(10)
-  rol                String      @db.Char(3)
-  estado_auditoria   String      @default("1") @db.Char(1)
-  fecha_creacion     DateTime    @default(now()) @db.Timestamp(6)
-  fecha_modificacion DateTime?   @db.Timestamp(6)
-  medicos            medicos[]
-  pacientes          pacientes[]
+  id_usuario         Int        @id @default(autoincrement())
+  nombre             String     @unique(map: "uq_nombre_usuarios") @db.VarChar(30)
+  clave              String     @db.Char(10)
+  rol                String     @db.Char(3)
+  estado_auditoria   String     @default("1") @db.Char(1)
+  fecha_creacion     DateTime   @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?  @db.Timestamp(6)
+  medicos            medicos?
+  pacientes          pacientes?
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -75,8 +75,8 @@ model citas_medicas {
   id_sede            Int
   fecha              DateTime       @db.Date
   hora               DateTime       @db.Time(6)
-  motivo             String         @db.VarChar(1000)
-  diagnostico        String         @db.VarChar(500)
+  motivo             String?        @db.VarChar(1000)
+  diagnostico        String?        @db.VarChar(500)
   estado             String         @default("A") @db.Char(1)
   estado_auditoria   String         @default("1") @db.Char(1)
   fecha_creacion     DateTime       @default(now()) @db.Timestamp(6)
